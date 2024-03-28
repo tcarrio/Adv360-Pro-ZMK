@@ -10,7 +10,7 @@ SELINUX1 := :z
 SELINUX2 := ,z
 endif
 
-.PHONY: all left clean_firmware clean_image clean
+.PHONY: all left right clean_firmware clean_image clean
 
 all:
 	$(shell bin/get_version.sh >> /dev/null)
@@ -20,6 +20,7 @@ all:
 		-v $(PWD)/config:/app/config:ro$(SELINUX2) \
 		-e TIMESTAMP=$(TIMESTAMP) \
 		-e COMMIT=$(COMMIT) \
+		-e BUILD_LEFT=true \
 		-e BUILD_RIGHT=true \
 		zmk
 	git checkout config/version.dtsi
@@ -32,7 +33,22 @@ left:
 		-v $(PWD)/config:/app/config:ro$(SELINUX2) \
 		-e TIMESTAMP=$(TIMESTAMP) \
 		-e COMMIT=$(COMMIT) \
+		-e BUILD_LEFT=true \
 		-e BUILD_RIGHT=false \
+		zmk
+	git checkout config/version.dtsi
+
+
+right:
+	$(shell bin/get_version.sh >> /dev/null)
+	$(DOCKER) build --tag zmk --file Dockerfile .
+	$(DOCKER) run --rm -it --name zmk \
+		-v $(PWD)/firmware:/app/firmware$(SELINUX1) \
+		-v $(PWD)/config:/app/config:ro$(SELINUX2) \
+		-e TIMESTAMP=$(TIMESTAMP) \
+		-e COMMIT=$(COMMIT) \
+		-e BUILD_LEFT=false \
+		-e BUILD_RIGHT=true \
 		zmk
 	git checkout config/version.dtsi
 
