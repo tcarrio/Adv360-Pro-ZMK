@@ -85,7 +85,8 @@ Follow the programming instruction on page 8 of the [Quick Start Guide](https://
 >
 > This project maps the bootloader to the Mod layer keys as follows:
 >
-> ![image](https://github.com/tcarrio/Adv360-Pro-ZMK/assets/8659099/a57a202b-fac9-4e6d-a2a5-d9ccfcf5db7b)
+> ![image](https://github.com/tcarrio/Adv360-Pro-ZMK/assets/8659099/275669ca-f7f4-4a24-ab15-b0c6c26b7226)
+
 
 
 > Note: Some operating systems wont always treat the drive as ejected after the settings-reset file is flashed, this doesn't mean that the flashing process has failed.
